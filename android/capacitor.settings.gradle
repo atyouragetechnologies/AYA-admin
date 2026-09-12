@@ -2,9 +2,6 @@
 include ':capacitor-android'
 project(':capacitor-android').projectDir = new File('../node_modules/@capacitor/android/capacitor')
 
-include ':capgo-capacitor-updater'
-project(':capgo-capacitor-updater').projectDir = new File('../node_modules/@capgo/capacitor-updater/android')
-
 include ':capacitor-community-keep-awake'
 project(':capacitor-community-keep-awake').projectDir = new File('../node_modules/@capacitor-community/keep-awake/android')
 
@@ -20,6 +17,9 @@ project(':capacitor-local-notifications').projectDir = new File('../node_modules
 include ':capacitor-network'
 project(':capacitor-network').projectDir = new File('../node_modules/@capacitor/network/android')
 
+include ':capacitor-push-notifications'
+project(':capacitor-push-notifications').projectDir = new File('../node_modules/@capacitor/push-notifications/android')
+
 include ':capacitor-share'
 project(':capacitor-share').projectDir = new File('../node_modules/@capacitor/share/android')
 
@@ -31,3 +31,6 @@ project(':capacitor-status-bar').projectDir = new File('../node_modules/@capacit
 
 include ':capacitor-text-zoom'
 project(':capacitor-text-zoom').projectDir = new File('../node_modules/@capacitor/text-zoom/android')
+
+include ':capgo-capacitor-updater'
+project(':capgo-capacitor-updater').projectDir = new File('../node_modules/@capgo/capacitor-updater/android')

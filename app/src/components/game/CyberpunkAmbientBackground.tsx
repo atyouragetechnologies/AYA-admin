@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useDevicePerformance } from '../../hooks/useDevicePerformance';
 
 interface CyberpunkAmbientBackgroundProps {
     isViolet?: boolean;
@@ -32,13 +33,16 @@ export const CyberpunkAmbientBackground: React.FC<CyberpunkAmbientBackgroundProp
     isViolet = true,
     isCyan = false,
 }) => {
+    const { isLowEnd } = useDevicePerformance();
+
     return (
         <div className="hidden md:block absolute inset-0 overflow-hidden pointer-events-none z-0 select-none bg-[#0d0d16]">
             {/* Vignette Depth Layer */}
             <div className="absolute inset-0 shadow-[inset_0_0_180px_rgba(0,0,0,0.95)] z-10" />
 
             {/* Zero-Lag Cyberpunk 3D Starfield Layer */}
-            <div className="absolute inset-0 z-5 pointer-events-none">
+            {!isLowEnd && (
+                <div className="absolute inset-0 z-5 pointer-events-none">
                 {STARS.map((star) => (
                     <motion.div
                         key={`star-${star.id}`}
@@ -64,7 +68,8 @@ export const CyberpunkAmbientBackground: React.FC<CyberpunkAmbientBackgroundProp
                         className="absolute rounded-full"
                     />
                 ))}
-            </div>
+                </div>
+            )}
 
             {/* Dynamic Spotlight Glow Orbs */}
             <motion.div
@@ -99,7 +104,8 @@ export const CyberpunkAmbientBackground: React.FC<CyberpunkAmbientBackgroundProp
             </div>
 
             {/* Floating Ambient Glowing Particles */}
-            <div className="absolute inset-0 z-10">
+            {!isLowEnd && (
+                <div className="absolute inset-0 z-10">
                 {PARTICLES.map((particle) => (
                     <motion.div
                         key={particle.id}
@@ -128,7 +134,8 @@ export const CyberpunkAmbientBackground: React.FC<CyberpunkAmbientBackgroundProp
                         className="absolute rounded-full pointer-events-none"
                     />
                 ))}
-            </div>
+                </div>
+            )}
         </div>
     );
 };

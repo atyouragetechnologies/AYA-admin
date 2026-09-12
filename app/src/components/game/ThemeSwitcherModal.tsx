@@ -4,6 +4,7 @@ import { X, Check } from 'lucide-react';
 import { useUserStore, type MapTheme } from '../../store/userStore';
 import { supabase } from '../../utils/supabase';
 import { audioManager as audioSynth } from "../../utils/audioManager";
+import { useDevicePerformance } from '../../hooks/useDevicePerformance';
 
 interface ThemeSwitcherModalProps {
   isOpen: boolean;
@@ -90,6 +91,7 @@ export function ThemeSwitcherModal({ isOpen, onClose }: ThemeSwitcherModalProps)
   const mapTheme = useUserStore((state) => state.mapTheme);
   const setMapTheme = useUserStore((state) => state.setMapTheme);
   const profile = useUserStore((state) => state.profile);
+  const { isLowEnd } = useDevicePerformance();
 
   const [toast, setToast] = useState<string | null>(null);
   const [particles] = useState(() =>
@@ -153,24 +155,26 @@ export function ThemeSwitcherModal({ isOpen, onClose }: ThemeSwitcherModalProps)
             }}
           >
             {/* Particle Background Layer */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              {particles.map((p) => (
-                <Particle key={p.id} depth={p.depth} />
-              ))}
-              {/* Ambient conic glow */}
-              <motion.div
-                className="absolute -top-20 -left-20 w-64 h-64 rounded-full pointer-events-none"
-                style={{ background: 'radial-gradient(circle, rgba(0,241,254,0.06) 0%, transparent 70%)' }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-              />
-              <motion.div
-                className="absolute -bottom-16 -right-16 w-48 h-48 rounded-full pointer-events-none"
-                style={{ background: 'radial-gradient(circle, rgba(255,179,71,0.05) 0%, transparent 70%)' }}
-                animate={{ rotate: -360 }}
-                transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-              />
-            </div>
+            {!isLowEnd && (
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {particles.map((p) => (
+                  <Particle key={p.id} depth={p.depth} />
+                ))}
+                {/* Ambient conic glow */}
+                <motion.div
+                  className="absolute -top-20 -left-20 w-64 h-64 rounded-full pointer-events-none"
+                  style={{ background: 'radial-gradient(circle, rgba(0,241,254,0.06) 0%, transparent 70%)' }}
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                />
+                <motion.div
+                  className="absolute -bottom-16 -right-16 w-48 h-48 rounded-full pointer-events-none"
+                  style={{ background: 'radial-gradient(circle, rgba(255,179,71,0.05) 0%, transparent 70%)' }}
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+                />
+              </div>
+            )}
 
             {/* Header */}
             <div className="relative z-10 flex items-center justify-between px-6 pt-6 pb-4">

@@ -28,6 +28,14 @@ export default defineConfig({
     },
     optimizeDeps: {
       entries: ['app/index.html', 'app/router.tsx', 'src/**/*.{ts,tsx}']
-    }
+    },
+    build: {
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+        },
+      },
+    },
   }
 });

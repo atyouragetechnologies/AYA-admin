@@ -15,6 +15,7 @@ import { getFollowerCount, getFollowingCount } from '../../services/followServic
 import { fetchUserDnaProfile, saveUserDnaProfile, subscribeToLiveDnaUpdates, type UserDnaProfile } from '../../services/dnaService';
 import { generateCurrentChapter, generateEmergingYou, getPotentiallyAlignedDirections } from '../../services/insightService';
 import { MascotLoader } from '../ui/MascotLoader';
+import { useDevicePerformance } from '../../hooks/useDevicePerformance';
 
 interface DnaProfileProps {
     onBack: () => void;
@@ -89,6 +90,7 @@ const NeonTraitBar = ({ label, value, neonColor }: { label: string, value: numbe
 export function DnaProfile({ onBack }: DnaProfileProps) {
     const profile = useUserStore((state) => state.profile);
     const setProfile = useUserStore((state) => state.setProfile);
+    const { isLowEnd } = useDevicePerformance();
 
     // DNA Report mounts → bgm-neon-map.mp3
     useEffect(() => {
@@ -409,15 +411,19 @@ export function DnaProfile({ onBack }: DnaProfileProps) {
             {/* Deep Space Background gradient */}
             <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top,#2b2b38_0%,#000000_60%)]" />
             
-            {/* Floating Particles */}
-            <div className="fixed inset-0 pointer-events-none">
-                <FloatingParticle style={{ top: '10%', left: '20%', width: 6, height: 6, backgroundColor: '#99f7ff', color: '#99f7ff' }} animationDuration="4s" />
-                <FloatingParticle style={{ top: '40%', right: '15%', width: 4, height: 4, backgroundColor: '#ff51fa', color: '#ff51fa' }} animationDuration="5s" />
-                <FloatingParticle style={{ bottom: '20%', left: '30%', width: 8, height: 8, backgroundColor: '#d575ff', color: '#d575ff' }} animationDuration="6s" />
-                <FloatingParticle style={{ top: '60%', left: '80%', width: 5, height: 5, backgroundColor: '#99f7ff', color: '#99f7ff' }} animationDuration="3s" />
-            </div>
+            {!isLowEnd && (
+                <>
+                    {/* Floating Particles */}
+                    <div className="fixed inset-0 pointer-events-none">
+                        <FloatingParticle style={{ top: '10%', left: '20%', width: 6, height: 6, backgroundColor: '#99f7ff', color: '#99f7ff' }} animationDuration="4s" />
+                        <FloatingParticle style={{ top: '40%', right: '15%', width: 4, height: 4, backgroundColor: '#ff51fa', color: '#ff51fa' }} animationDuration="5s" />
+                        <FloatingParticle style={{ bottom: '20%', left: '30%', width: 8, height: 8, backgroundColor: '#d575ff', color: '#d575ff' }} animationDuration="6s" />
+                        <FloatingParticle style={{ top: '60%', left: '80%', width: 5, height: 5, backgroundColor: '#99f7ff', color: '#99f7ff' }} animationDuration="3s" />
+                    </div>
 
-            <AnimatedHelix />
+                    <AnimatedHelix />
+                </>
+            )}
 
             {/* Navigation Header */}
             <div className="relative z-20 flex items-center justify-between pt-36 pb-6 px-6 w-full max-w-4xl mx-auto">

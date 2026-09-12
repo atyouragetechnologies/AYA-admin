@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import type { FutureMatch, LifeTraits } from '../../utils/futureSelfMatch';
 import { getWeakestTrait } from '../../utils/futureSelfMatch';
+import { useDevicePerformance } from '../../hooks/useDevicePerformance';
 
 // ── Props ────────────────────────────────────────────────────────────────────
 interface FutureSelfCardProps {
@@ -74,6 +75,7 @@ export function FutureSelfCard({ futureMatch, storiesCompleted, decisionsCount, 
     const { archetype, lifeTraits } = futureMatch;
     const weakest = useMemo(() => getWeakestTrait(lifeTraits), [lifeTraits]);
     const evolutionMsg = getEvolutionMessage(storiesCompleted);
+    const { isLowEnd } = useDevicePerformance();
 
     return (
         <div
@@ -98,23 +100,25 @@ export function FutureSelfCard({ futureMatch, storiesCompleted, decisionsCount, 
             />
 
             {/* Floating Particles */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[2rem]">
-                <Particle style={{ top: '8%',  left: '12%', width: 5, height: 5, color: '#00f2ff', backgroundColor: '#00f2ff', animationDuration: '3.5s' }} />
-                <Particle style={{ top: '20%', right: '10%', width: 3, height: 3, color: '#d575ff', backgroundColor: '#d575ff', animationDuration: '5s' }} />
-                <Particle style={{ top: '55%', left: '5%',  width: 4, height: 4, color: '#f59e0b', backgroundColor: '#f59e0b', animationDuration: '4.2s' }} />
-                <Particle style={{ top: '70%', right: '8%', width: 6, height: 6, color: '#ff51fa', backgroundColor: '#ff51fa', animationDuration: '3s' }} />
-                <Particle style={{ bottom: '10%', left: '40%', width: 3, height: 3, color: '#00ff9d', backgroundColor: '#00ff9d', animationDuration: '6s' }} />
-                {/* Amber top-right ambient glow (Stitch "Dossier Card" signature) */}
-                <div
-                    className="absolute -top-10 -right-10 w-48 h-48 rounded-full pointer-events-none"
-                    style={{ background: 'radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%)' }}
-                />
-                {/* Purple bottom-left ambient */}
-                <div
-                    className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full pointer-events-none"
-                    style={{ background: 'radial-gradient(circle, rgba(131,0,180,0.2) 0%, transparent 70%)' }}
-                />
-            </div>
+            {!isLowEnd && (
+                <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[2rem]">
+                    <Particle style={{ top: '8%',  left: '12%', width: 5, height: 5, color: '#00f2ff', backgroundColor: '#00f2ff', animationDuration: '3.5s' }} />
+                    <Particle style={{ top: '20%', right: '10%', width: 3, height: 3, color: '#d575ff', backgroundColor: '#d575ff', animationDuration: '5s' }} />
+                    <Particle style={{ top: '55%', left: '5%',  width: 4, height: 4, color: '#f59e0b', backgroundColor: '#f59e0b', animationDuration: '4.2s' }} />
+                    <Particle style={{ top: '70%', right: '8%', width: 6, height: 6, color: '#ff51fa', backgroundColor: '#ff51fa', animationDuration: '3s' }} />
+                    <Particle style={{ bottom: '10%', left: '40%', width: 3, height: 3, color: '#00ff9d', backgroundColor: '#00ff9d', animationDuration: '6s' }} />
+                    {/* Amber top-right ambient glow (Stitch "Dossier Card" signature) */}
+                    <div
+                        className="absolute -top-10 -right-10 w-48 h-48 rounded-full pointer-events-none"
+                        style={{ background: 'radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%)' }}
+                    />
+                    {/* Purple bottom-left ambient */}
+                    <div
+                        className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full pointer-events-none"
+                        style={{ background: 'radial-gradient(circle, rgba(131,0,180,0.2) 0%, transparent 70%)' }}
+                    />
+                </div>
+            )}
 
             <div className="relative z-10 p-6 sm:p-8">
 

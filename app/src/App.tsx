@@ -35,6 +35,12 @@ ReactGA.initialize('G-30ZXCBJXSQ');
 
 import { useNativeFeatures } from './hooks/useNativeFeatures';
 import { useOtaUpdater } from './hooks/useOtaUpdater';
+import { useLocation } from 'react-router-dom';
+
+const CatchAllRedirect = ({ to }: { to: string }) => {
+  const location = useLocation();
+  return <Navigate to={`${to}${location.search}${location.hash}`} replace />;
+};
 
 function App() {
   useNativeFeatures();
@@ -100,9 +106,9 @@ function App() {
               <Route path="social" element={<SocialPage />} />
               <Route path="admin" element={<AdminRouteHandler />} />
               <Route path="admin/feedback" element={<FeedbackDashboard />} />
-              <Route path="*" element={<Navigate to="/game" replace />} />
+              <Route path="*" element={<CatchAllRedirect to="/game" />} />
             </Route>
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<CatchAllRedirect to="/" />} />
           </Route>
         </Routes>
       </Suspense>
