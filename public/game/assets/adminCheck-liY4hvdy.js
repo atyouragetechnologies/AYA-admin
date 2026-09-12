@@ -1,0 +1,1 @@
+import{t as e}from"./supabase-Cdxrq_G_.js";async function t(){try{let{data:t,error:n}=await e.rpc(`is_admin_user`);return n?(console.error(`[AdminCheck] RPC error:`,n.message),!1):!!t}catch(e){return console.error(`[AdminCheck] Failed:`,e),!1}}export{t as checkIsAdmin};
