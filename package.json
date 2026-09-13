@@ -12,6 +12,7 @@
     "build:game": "npm run --prefix app build && node -e \"const fs = require('fs'); fs.rmSync('public/game', {recursive: true, force: true}); fs.cpSync('app/dist', 'public/game', {recursive: true, force: true}); console.log('[Build] Synced app/dist to public/game');\"",
     "build": "npm run build:game && vite build",
     "build:dev": "vite build --mode development",
+    "deploy:web": "npm run build && npx wrangler deploy --cwd .output/",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
