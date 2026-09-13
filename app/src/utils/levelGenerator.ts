@@ -848,7 +848,7 @@ export function generateLevels(_age: number): Level[] {
             achievements: ['Prime Minister of India (2014–present)', 'Chief Minister of Gujarat (2001–2014)', 'Full-time grassroots pracharak from youth'],
             lesson: 'True purpose often lies at the intersection of your highest ideals and the gritty reality of everyday work.',
             avatarUrl: 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/avatar_Narendra Modi.webp',
-            scenarioId: 'lvl_age_20_modi',
+            scenarioId: 'lvl_age_20_modi_2',
             idolTraits: { discipline: 98, resilience: 95, risk: 90, leadership: 98, creativity: 80, empathy: 85, vision: 95 }
         },
         // Age 21: Pratosh Bansal (The Opinion Trap) - Top of Age 21
