@@ -1,4 +1,4 @@
-# Logs
+﻿# Logs
 logs
 *.log
 npm-debug.log*
@@ -55,10 +55,3 @@ dummy-web-dir/
 *.docx
 *.winmd
 
-# Credentials & Secrets — NEVER commit these
-.env
-.env.local
-.env.production
-serviceAccountKey.json
-google-services-secret.json
-google-services.json
