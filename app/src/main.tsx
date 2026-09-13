@@ -112,13 +112,15 @@ window.addEventListener('orientationchange', () => {
   setTimeout(setVhVariable, 200); // Delay for iOS orientation animation
 }, { passive: true });
 
-try {
-  console.log('[AYA Boot] localStorage aya_user_id:', localStorage.getItem('aya_user_id'));
-  console.log('[AYA Boot] sessionStorage aya_user_id:', sessionStorage.getItem('aya_user_id'));
-  console.log('[AYA Boot] Zustand persisted store:', localStorage.getItem('aya-user-store'));
-} catch (e) {
-  console.warn('[AYA Boot] Storage not accessible (iOS Private Mode?):', e);
+if (import.meta.env.DEV) {
+  try {
+    console.log('[AYA Boot] aya_user_id:', localStorage.getItem('aya_user_id'));
+    console.log('[AYA Boot] store keys:', Object.keys(JSON.parse(localStorage.getItem('aya-user-store') || '{}')));
+  } catch (e) {
+    console.warn('[AYA Boot] Storage not accessible:', e);
+  }
 }
+
 
 
 createRoot(document.getElementById('root')!).render(

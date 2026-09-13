@@ -54,3 +54,9 @@ dummy-web-dir/
 *.xls
 *.docx
 *.winmd
+
+# Security-sensitive credentials (NEVER commit these)
+serviceAccountKey.json
+*.jks
+*.keystore
+google-services-secret.json
