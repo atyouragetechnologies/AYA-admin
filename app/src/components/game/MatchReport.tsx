@@ -196,7 +196,7 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
     };
 
     return (
-        <div className={clsx("w-full min-h-screen flex flex-col font-sans bg-[#050817] text-white relative transition-opacity duration-300", isClosing && "opacity-0")}>
+        <div role="dialog" className={clsx("w-full min-h-screen flex flex-col font-sans bg-[#050817] text-white relative transition-opacity duration-300", isClosing && "opacity-0")}>
             {/* Background Effects */}
             <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
                 <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#8B5CF6]/15 blur-[120px]" />
@@ -508,6 +508,7 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
                 )}
                 <button
                     onClick={handleContinue}
+                    aria-label="close"
                     className="group relative w-full max-w-[360px] sm:max-w-[400px] h-12 sm:h-14 rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:shadow-[0_0_40px_rgba(0,217,255,0.4)]"
                 >
                     <div className="absolute inset-0 bg-gradient-to-r from-[#8B5CF6] via-[#EC3B9A] to-[#00D9FF]" />
