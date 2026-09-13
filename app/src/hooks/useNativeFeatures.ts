@@ -68,9 +68,13 @@ export function useNativeFeatures() {
               localStorage.setItem('aya_fcm_token', token.value);
 
               // If user is logged in, attach to their profile in Supabase
-              const { data: { session } } = await supabase.auth.getSession();
-              if (session?.user) {
-                await supabase.from('users').update({ fcm_token: token.value }).eq('auth_user_id', session.user.id);
+              try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session?.user) {
+                  await supabase.from('users').update({ fcm_token: token.value }).eq('auth_user_id', session.user.id);
+                }
+              } catch (fcmErr) {
+                console.warn('[Push] fcm_token update skipped (column may not exist yet):', fcmErr);
               }
             });
 

@@ -721,7 +721,6 @@ export const authService = {
 
         // ── Path 3: Direct Supabase client fallback ───────────────────────────
         if (!savedRow) {
-            const storedFcmToken = typeof localStorage !== 'undefined' ? localStorage.getItem('aya_fcm_token') : null;
             const basePayload: any = {
                 auth_user_id: authUid,
                 username: cleanUsername,
@@ -731,7 +730,8 @@ export const authService = {
             };
             if (cleanMobile) basePayload.mobile = cleanMobile;
             if (authUser?.email) basePayload.email = authUser.email;
-            if (storedFcmToken) basePayload.fcm_token = storedFcmToken;
+            // Note: fcm_token is saved separately via push notification listener
+            // to avoid schema cache errors if the column doesn't exist
 
             // 1. Check if user row already exists by auth_user_id, id, or mobile
             const orConditions = [`auth_user_id.eq.${authUid}`, `id.eq.${authUid}`];
