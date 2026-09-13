@@ -100,10 +100,11 @@ export function executeVercelHandler(handler: Function, request: Request, env: a
     try {
       const vReq = await createVercelRequest(request, env);
       
-      // Temporarily inject env into process.env for legacy scripts
-      if (typeof process !== "undefined" && process.env) {
-        Object.assign(process.env, env);
+      // Polyfill process.env for Cloudflare Workers environment
+      if (typeof globalThis.process === "undefined") {
+        (globalThis as any).process = { env: {} };
       }
+      Object.assign(globalThis.process.env, env);
 
       const vRes = new VercelResponsePolyfill(resolve);
       

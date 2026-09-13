@@ -1,1 +1,0 @@
-import{t as r}from"./supabase-BY4aOj2Z.js";async function t(){try{const{data:t,error:a}=await r.rpc("is_admin_user");return!a&&!!t}catch(t){return!1}}export{t as checkIsAdmin};
