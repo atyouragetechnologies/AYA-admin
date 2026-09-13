@@ -38,6 +38,20 @@ export interface SignInPhoneParams {
     password?: string;
 }
 
+function formatGoogleSignInError(error: unknown): Error {
+    const message = error instanceof Error ? error.message : String(error || '');
+    const isAccountReauthenticationFailure = /\[16\].*account reauth failed/i.test(message);
+    const isOAuthConfigurationFailure = /\b(?:10|12500)\b.*(?:developer_error|sign.?in)/i.test(message);
+
+    if (isAccountReauthenticationFailure || isOAuthConfigurationFailure) {
+        return new Error(
+            'Google Sign-In could not verify this app. Please use username or phone login for now, then try Google Sign-In again after updating the app.'
+        );
+    }
+
+    return new Error(message || 'Google Sign-In could not be completed. Please try again.');
+}
+
 export const authService = {
     /**
      * Trigger Google OAuth login/signup flow
@@ -47,9 +61,14 @@ export const authService = {
 
         if (isNativeApp) {
             // Use native Google Sign In popup (bypasses broken webview redirects)
-            const result = await FirebaseAuthentication.signInWithGoogle({
-                skipNativeAuth: true,
-            });
+            let result;
+            try {
+                result = await FirebaseAuthentication.signInWithGoogle({
+                    skipNativeAuth: true,
+                });
+            } catch (error) {
+                throw formatGoogleSignInError(error);
+            }
             
             if (result.credential?.idToken) {
                 // Pass the native Google idToken to Supabase to start a session securely
