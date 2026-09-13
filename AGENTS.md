@@ -1,4 +1,4 @@
-﻿<!-- LOVABLE:BEGIN -->
+<!-- LOVABLE:BEGIN -->
 > [!IMPORTANT]
 > This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
 > published git history — force pushing, or rebasing/amending/squashing commits
@@ -82,7 +82,7 @@ To avoid unnecessary back-and-forth when modifying UI components:
 
 ## B2 Storage
 
-- The `cpbs-videos` Backblaze B2 bucket is **private**. Never assume it is public.
+- The `aya-game-assets-cloud` Backblaze B2 bucket is **private**. Never assume it is public.
 - Always access files via the Cloudflare CDN proxy: `https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/`
 - Never use direct `fXXX.backblazeb2.com` URLs.
 

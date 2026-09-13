@@ -6,9 +6,10 @@ import { audioManager as audioSynth } from "../../utils/audioManager";
 import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import { saveSession } from '../../utils/session';
 import { supabase } from '../../utils/supabase';
-import { deriveMobileEmail, deriveMobilePassword } from '../../utils/authHelpers';
+import { deriveMobileEmail, deriveMobilePassword, derivePhoneEmail, normalizePhone } from '../../utils/authHelpers';
 import { useUsernameAvailability } from '../../hooks/useUsernameAvailability';
 import { UsernameField } from './UsernameField';
+import { authService } from '../../services/authService';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
@@ -241,15 +242,44 @@ export function OnboardingWizard() {
         if (!userData.mobile) return;
 
         const email = deriveMobileEmail(userData.mobile);
-        const password = deriveMobilePassword(userData.mobile);
+        const legacyEmail = derivePhoneEmail(userData.mobile);
+        const newPassword = deriveMobilePassword(userData.mobile);
+        const cleanPhone = normalizePhone(userData.mobile);
+        const legacyPassword = `Ayaaya-fall${cleanPhone}!Auth`; // The hardcoded old fallback salt password
+        
+        const strategies = [
+            { email, password: newPassword },
+            { email: legacyEmail, password: newPassword },
+            { email, password: legacyPassword },
+            { email: legacyEmail, password: legacyPassword }
+        ];
 
-        // 1. Try signing in (most users will already have an auth account)
-        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
+        let signInData: any = null;
+        let signInError: any = null;
+        let successfulStrategy: any = null;
+
+        for (const strategy of strategies) {
+            const response = await supabase.auth.signInWithPassword({
+                email: strategy.email,
+                password: strategy.password,
+            });
+            
+            if (response.data?.session) {
+                signInData = response.data;
+                signInError = null;
+                successfulStrategy = strategy;
+                break;
+            } else {
+                signInError = response.error;
+            }
+        }
 
         if (signInData?.session) {
+            // MIGRATION: If we succeeded using the old legacy password, seamlessly upgrade them to the new secure password!
+            if (successfulStrategy.password === legacyPassword && newPassword !== legacyPassword) {
+                await supabase.auth.updateUser({ password: newPassword }).catch((e: any) => console.error("Password migration failed:", e));
+            }
+
             // Session restored — link auth_user_id if not already set
             const authUid = signInData.session.user.id;
             if (!userData.auth_user_id) {
@@ -274,7 +304,7 @@ export function OnboardingWizard() {
 
         const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
             email,
-            password,
+            password: newPassword,
         });
 
         if (signUpError) {
@@ -418,7 +448,7 @@ export function OnboardingWizard() {
         setIsLoading(true);
         setError("");
 
-        const cleanMobile = mobile.trim().replace(/\s+/g, '');
+        const cleanMobile = normalizePhone(mobile);
         const cleanUsername = username.trim();
 
         if (isRegisterMode) {
@@ -473,7 +503,7 @@ export function OnboardingWizard() {
                 if (userDataRaw) {
                     try {
                         const userData = JSON.parse(userDataRaw);
-                        const cleanMobile = mobile.trim().replace(/\s+/g, '');
+                        const cleanMobile = normalizePhone(mobile);
                         // Update details if changed
                         if (userData.name !== name.trim() || userData.age !== age || userData.mobile !== cleanMobile) {
                             const { error: updateError } = await supabase
@@ -552,7 +582,11 @@ export function OnboardingWizard() {
                     level: 1,
                     stories_completed: 0
                 };
-                if (googleAuthId) insertPayload.google_id = googleAuthId;
+                if (googleAuthId) {
+                    insertPayload.google_id = googleAuthId;
+                    insertPayload.auth_user_id = googleAuthId;
+                    insertPayload.id = googleAuthId;
+                }
 
                 const { data: newUser, error: insertError } = await supabase
                     .from('users')
@@ -581,16 +615,12 @@ export function OnboardingWizard() {
     const handleGoogleSignIn = async () => {
         audioSynth.playClick();
         setIsLoading(true);
-        const { error } = await supabase.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-                redirectTo: window.location.origin + '/game/welcome'
-            }
-        });
-
-        if (error) {
-            console.error("OAuth Init Error:", error);
-            setError(`Failed to launch Google Sign-In: ${error.message}. Ensure Google Auth is enabled in your Supabase Dashboard.`);
+        setError('');
+        try {
+            await authService.signInWithGoogle(window.location.origin + '/game/welcome');
+        } catch (err: any) {
+            console.error("OAuth Init Error:", err);
+            setError(`Failed to launch Google Sign-In: ${err.message}. Ensure Google Auth is enabled in your Supabase Dashboard.`);
             setIsLoading(false);
         }
     };
