@@ -7,6 +7,8 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { TextZoom } from '@capacitor/text-zoom';
 import { Network } from '@capacitor/network';
+import { PushNotifications } from '@capacitor/push-notifications';
+import { supabase } from '../utils/supabase';
 
 /** True when running inside the Capacitor Android/iOS app (not a browser tab) */
 export const isNativeApp = Capacitor.isNativePlatform();
@@ -51,6 +53,33 @@ export function useNativeFeatures() {
         // Tag <body> so all CSS can target Android specifically
         if (isNativeApp) {
           document.body.classList.add('is-android');
+
+          // "?"? NATIVE PUSH NOTIFICATIONS (FIREBASE) "?"?
+          // Immediately request permission on app boot as requested by user
+          try {
+            const permStatus = await PushNotifications.requestPermissions();
+            if (permStatus.receive === 'granted') {
+              await PushNotifications.register();
+            }
+
+            // Capture the FCM token
+            await PushNotifications.addListener('registration', async (token) => {
+              console.log('[Push] FCM Token received: ', token.value);
+              localStorage.setItem('aya_fcm_token', token.value);
+
+              // If user is logged in, attach to their profile in Supabase
+              const { data: { session } } = await supabase.auth.getSession();
+              if (session?.user) {
+                await supabase.from('users').update({ fcm_token: token.value }).eq('auth_user_id', session.user.id);
+              }
+            });
+
+            await PushNotifications.addListener('registrationError', (error: any) => {
+              console.warn('[Push] FCM Registration Error: ', JSON.stringify(error));
+            });
+          } catch (e) {
+            console.warn('[Push] Native Push Setup Failed: ', e);
+          }
         }
 
         await KeepAwake.keepAwake();
@@ -121,14 +150,42 @@ export function useNativeFeatures() {
 
         // ── HANDLE PHYSICAL BACK BUTTON ────────────────────────────────────
         await CapApp.addListener('backButton', ({ canGoBack }: { canGoBack: boolean }) => {
-          // Simulate Escape key to close modals gracefully
-          const openDialog = document.querySelector('[role="dialog"], dialog[open]');
-          if (openDialog) {
-            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', bubbles: true }));
-            return;
+          // 1. SMART POPUP CLOSER: Find any visible modal, overlay, or dialog
+          // We look for elements with high z-index (Tailwind z-40/z-50) or standard dialog roles.
+          const modals = Array.from(document.querySelectorAll('.fixed.z-50, .fixed.z-40, [role="dialog"], dialog[open]'));
+          
+          // Filter out invisible ones (e.g. fading out or hidden by classes)
+          const visibleModals = modals.filter(el => {
+              const style = window.getComputedStyle(el);
+              return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0';
+          });
+
+          if (visibleModals.length > 0) {
+              // Take the topmost (last in DOM tree)
+              const topmost = visibleModals[visibleModals.length - 1];
+              
+              // Look for our standard close buttons (Lucide X icon, ArrowLeft, or explicit aria labels)
+              const xIcon = topmost.querySelector('svg.lucide-x, svg.lucide-arrow-left');
+              const closeBtn = (xIcon?.closest('button') || topmost.querySelector('button[aria-label*="close" i], button[aria-label*="back" i]')) as HTMLElement;
+              
+              if (closeBtn) {
+                  closeBtn.click(); // Natively click the close button to trigger React's onClose!
+                  return;
+              }
+              
+              // Fallback to sending Escape key
+              document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', bubbles: true }));
+              return;
           }
+
+          // 2. NORMAL NAVIGATION
           if (canGoBack) {
-            window.history.back();
+            // Prevent going "back" to a blank splash screen if we are already on the main app dashboard
+            if (window.location.pathname === '/game' || window.location.pathname === '/') {
+                CapApp.exitApp();
+            } else {
+                window.history.back();
+            }
           } else {
             CapApp.exitApp();
           }

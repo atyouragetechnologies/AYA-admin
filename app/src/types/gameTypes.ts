@@ -53,6 +53,7 @@ export interface UserProfile {
     email?: string | null;
     google_id?: string | null;
     auth_user_id?: string | null;
+    fcm_token?: string | null;
     onboarding_complete?: boolean;
     name: string;
     age: number;

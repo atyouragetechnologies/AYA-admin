@@ -215,7 +215,7 @@ export const PwaHeader: FC = () => {
                     className="flex items-center gap-1 text-left group truncate cursor-pointer select-none outline-none max-w-[50px] xs:max-w-[70px] sm:max-w-[130px]"
                 >
                     <span className="font-semibold tracking-wide text-[11px] sm:text-[13px] truncate text-[#F5F7FA] group-hover:text-[#00f2ff] transition-colors">
-                        {profile.name || profile.username || "GUEST"}
+                        {profile?.name || profile?.username || "GUEST"}
                     </span>
                 </button>
                 
@@ -238,7 +238,7 @@ export const PwaHeader: FC = () => {
                 >
                     <Sparkles size={11} className="text-amber-400 shrink-0 animate-pulse" />
                     <span className="text-[9px] font-black tracking-wider text-amber-400/80">XP</span>
-                    <span className="text-[10px] sm:text-xs font-black text-amber-200">{profile.total_xp || 0}</span>
+                    <span className="text-[10px] sm:text-xs font-black text-amber-200">{profile?.total_xp || 0}</span>
                 </button>
                 
             </div>

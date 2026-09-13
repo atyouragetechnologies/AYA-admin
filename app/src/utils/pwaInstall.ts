@@ -4,6 +4,7 @@
  */
 
 import { safeStorage } from './storage';
+import { Capacitor } from '@capacitor/core';
 
 let deferredPrompt: any = null;
 
@@ -96,6 +97,9 @@ const WEEKLY_PROMPT_KEY = 'aya_weekly_install_prompt_time';
  */
 export function shouldShowInstallPrompt(profile?: any): boolean {
     if (typeof window === 'undefined') return false;
+
+    // Rule 0: Never show inside the Native App (Capacitor)
+    if (Capacitor.isNativePlatform()) return false;
 
     // Rule 1: Never show if already installed or added to home screen
     if (isPwaInstalled()) return false;

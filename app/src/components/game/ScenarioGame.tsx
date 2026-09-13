@@ -305,6 +305,15 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                         if (localFrame?.audio_hi) {
                             updatedFrame.audio_hi = localFrame.audio_hi;
                         }
+                        if (localFrame?.bg) {
+                            updatedFrame.bg = localFrame.bg;
+                        }
+                        if (localFrame?.bgSize) {
+                            updatedFrame.bgSize = localFrame.bgSize;
+                        }
+                        if (localFrame?.bgPosition) {
+                            updatedFrame.bgPosition = localFrame.bgPosition;
+                        }
                         return updatedFrame;
                     }
                     return frame;
