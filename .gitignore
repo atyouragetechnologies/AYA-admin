@@ -55,8 +55,9 @@ dummy-web-dir/
 *.docx
 *.winmd
 
-# Security-sensitive credentials (NEVER commit these)
+# Credentials & Secrets — NEVER commit these
+.env
+.env.local
+.env.production
 serviceAccountKey.json
-*.jks
-*.keystore
 google-services-secret.json
