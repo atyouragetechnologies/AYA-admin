@@ -126,7 +126,7 @@ public class BigPictureNotificationPlugin extends Plugin {
                 // Fallback: getLaunchIntentForPackage can return null on some heavily
                 // customized OEM ROMs or if app is disabled. Use explicit intent as safety net.
                 if (intent == null) {
-                    intent = new Intent(context, com.cpbs.bhajans.MainActivity.class);
+                    intent = new Intent(context, com.aya.app.MainActivity.class);
                 }
                 if (intent != null) {
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
