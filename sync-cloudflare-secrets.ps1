@@ -16,7 +16,8 @@ $keysToSync = @(
     "SUPABASE_SERVICE_ROLE_KEY",
     "CLOUDFLARE_API_KEY",
     "CLOUDFLARE_ACCOUNT_ID",
-    "SUPABASE_ACCESS_TOKEN"
+    "SUPABASE_ACCESS_TOKEN",
+    "VITE_AUTH_SALT"
 )
 
 foreach ($line in Get-Content $envPath -Encoding UTF8) {
