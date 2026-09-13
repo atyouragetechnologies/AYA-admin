@@ -222,7 +222,7 @@ export const InstagramCard = forwardRef<HTMLDivElement, InstagramCardProps>(
                             PLAY FREE AT
                         </span>
                         <span className="text-[#f2effb] uppercase tracking-[0.2em] font-light text-md opacity-80">
-                            aya-phi-liard.vercel.app
+                            atyourage.app
                         </span>
                     </div>
 

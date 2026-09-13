@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
-    'https://hstddacoqsmztmbvvhhr.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhzdGRkYWNvcXNtenRtYnZ2aGhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc5MjgxODYsImV4cCI6MjEwMzUwNDE4Nn0.EXwnivlEoOkZViWS6UnaWTbSNPdjBB068AOsHU7SVpI'
+    process.env.VITE_SUPABASE_URL,
+    process.env.VITE_SUPABASE_ANON_KEY
 );
 
 async function checkPhones() {

@@ -1,4 +1,5 @@
 import "./lib/error-capture";
+import { handleApiRequest } from "./api-router";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
@@ -62,29 +63,10 @@ export default {
         pathname === "/signup" ||
         pathname.startsWith("/signup/");
 
-      // Handle /api/subscribe-push GET count
-      if (pathname === "/api/subscribe-push" && request.method === "GET") {
-        try {
-          const resp = await fetch("https://hstddacoqsmztmbvvhhr.supabase.co/rest/v1/push_subscriptions?select=id", {
-            headers: {
-              "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhzdGRkYWNvcXNtenRtYnZ2aGhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc5MjgxODYsImV4cCI6MjEwMzUwNDE4Nn0.EXwnivlEoOkZViWS6UnaWTbSNPdjBB068AOsHU7SVpI",
-            },
-          });
-          const list = await resp.json();
-          const count = Array.isArray(list) ? list.length : 0;
-          return new Response(JSON.stringify({ success: true, count }), {
-            status: 200,
-            headers: {
-              "content-type": "application/json",
-              "access-control-allow-origin": "*",
-            },
-          });
-        } catch {
-          return new Response(JSON.stringify({ success: true, count: 0 }), {
-            status: 200,
-            headers: { "content-type": "application/json" },
-          });
-        }
+      // Route API requests to the polyfill router (migrated from Vercel)
+      if (pathname.startsWith("/api/")) {
+        const apiResponse = await handleApiRequest(request, env);
+        if (apiResponse) return apiResponse;
       }
 
       // Check if it's a request for a static file asset (e.g. .js, .css, .webp, .m4a, etc.)

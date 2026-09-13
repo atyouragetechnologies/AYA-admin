@@ -12,7 +12,7 @@ export function SupabaseChecker() {
             
             if (!url || !key || url === '' || key === '') {
                 setStatus('no-env');
-                setDetails('VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY is missing in Vercel Environment Variables. Nothing will save.');
+                setDetails('VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY is missing in Environment Variables. Nothing will save.');
                 return;
             }
 

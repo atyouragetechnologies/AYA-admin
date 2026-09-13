@@ -187,7 +187,7 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
             const { Share } = await import('@capacitor/share');
             await Share.share({
                 title: `My AYA DNA Match — ${matchScore}%`,
-                text: `I just played "${cleanIdolName}" on AYA and scored ${matchScore}% DNA match! 🧬\n\nMy identity: ${tags.join(' · ')}\n\nDiscover your leadership DNA → atyourage.vercel.app`,
+                text: `I just played "${cleanIdolName}" on AYA and scored ${matchScore}% DNA match! 🧬\n\nMy identity: ${tags.join(' · ')}\n\nDiscover your leadership DNA → atyourage.app`,
                 dialogTitle: 'Share Your DNA Match',
             });
         } catch {
