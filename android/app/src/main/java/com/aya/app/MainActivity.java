@@ -7,6 +7,8 @@ import com.aya.app.plugins.BigPictureNotificationPlugin;
 import com.aya.app.plugins.NativeDownloadPlugin;
 import com.aya.app.plugins.NativeUploadPlugin;
 
+import androidx.core.view.WindowCompat;
+
 public class MainActivity extends BridgeActivity {
     private static final String TAG = "MainActivity";
 
@@ -16,6 +18,9 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(NativeDownloadPlugin.class);
         registerPlugin(NativeUploadPlugin.class);
         super.onCreate(savedInstanceState);
+        
+        // Enable edge-to-edge display (draw behind system navigation and status bars)
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
         // Handle notification if app was opened from one (fresh start)
         Intent intent = getIntent();

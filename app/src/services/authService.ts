@@ -3,6 +3,8 @@ import { saveSession, clearAllUserData } from '../utils/session';
 import { useUserStore } from '../store/userStore';
 import { checkUsernameAvailable } from './usernameService';
 import { validatePhone, derivePhoneEmail, deriveMobileEmail } from '../utils/authHelpers';
+import { isNativeApp } from '../hooks/useNativeFeatures';
+import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 
 /** Helper to generate a consistent synthetic email for username-only Supabase Auth */
 export function deriveUsernameEmail(username: string): string {
@@ -42,14 +44,36 @@ export const authService = {
      */
     async signInWithGoogle(redirectTo?: string) {
         const targetUrl = redirectTo || `${window.location.origin}/game/welcome`;
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-                redirectTo: targetUrl,
-            },
-        });
-        if (error) throw error;
-        return data;
+
+        if (isNativeApp()) {
+            // Use native Google Sign In popup (bypasses broken webview redirects)
+            const result = await FirebaseAuthentication.signInWithGoogle({
+                skipNativeAuth: true,
+            });
+            
+            if (result.credential?.idToken) {
+                // Pass the native Google idToken to Supabase to start a session securely
+                const { data, error } = await supabase.auth.signInWithIdToken({
+                    provider: 'google',
+                    token: result.credential.idToken,
+                    access_token: result.credential.accessToken
+                });
+                if (error) throw error;
+                return data;
+            } else {
+                throw new Error("No ID Token received from Google Sign In.");
+            }
+        } else {
+            // Standard Web OAuth Flow
+            const { data, error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: targetUrl,
+                },
+            });
+            if (error) throw error;
+            return data;
+        }
     },
 
     /**
@@ -826,12 +850,14 @@ export const authService = {
     },
 
     /**
-
      * Sign out user completely
      */
     async signOut() {
         try {
             await supabase.auth.signOut();
+            if (isNativeApp()) {
+                await FirebaseAuthentication.signOut().catch(() => {});
+            }
         } catch (e) {
             console.warn('[AuthService] signOut error:', e);
         }
