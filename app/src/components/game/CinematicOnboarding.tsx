@@ -58,12 +58,12 @@ export function CinematicOnboarding({ onComplete }: { onComplete?: () => void })
 
       {/* Top Navigation — FIXED */}
       {slide > 1 && slide < 3 && (
-        <button onClick={prevSlide} className="fixed top-6 left-6 z-[200] text-[#acaab5] hover:text-[#99f7ff] transition-colors text-sm uppercase tracking-widest font-bold">
+        <button onClick={prevSlide} className="fixed left-6 z-[200] text-[#acaab5] hover:text-[#99f7ff] transition-colors text-sm uppercase tracking-widest font-bold" style={{ top: 'max(1.5rem, env(safe-area-inset-top, 0px))' }}>
             ← Back
         </button>
       )}
       {slide < 3 && (
-        <button onClick={completeFlow} className="fixed top-6 right-6 z-[200] text-[#acaab5] hover:text-[#99f7ff] transition-colors text-sm uppercase tracking-widest font-bold">
+        <button onClick={completeFlow} className="fixed right-6 z-[200] text-[#acaab5] hover:text-[#99f7ff] transition-colors text-sm uppercase tracking-widest font-bold" style={{ top: 'max(1.5rem, env(safe-area-inset-top, 0px))' }}>
             Skip
         </button>
       )}

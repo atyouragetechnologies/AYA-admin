@@ -1170,7 +1170,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
 
     return (
         <div
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden font-sans cinematic-container"
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden font-sans cinematic-container pt-inset pb-inset"
             style={{
                 backgroundColor: isCandyMode ? '#0f172a' : '#000',
             }}
@@ -1653,18 +1653,20 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
             {/* Save Status Toast — visible indicator so user knows if DB save worked */}
             {saveStatus !== 'idle' && (
                 <div className={clsx(
-                    "fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] px-5 py-2.5 rounded-full font-bold text-sm tracking-wide shadow-2xl border backdrop-blur-md transition-all animate-fade-in-up",
+                    "fixed left-1/2 -translate-x-1/2 z-[9999] px-5 py-2.5 rounded-full font-bold text-sm tracking-wide shadow-2xl border backdrop-blur-md transition-all animate-fade-in-up",
                     saveStatus === 'saved'
                         ? "bg-emerald-900/80 border-emerald-400/50 text-emerald-300"
                         : "bg-red-900/80 border-red-400/50 text-red-300"
-                )}>
+                )}
+                style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom, 0px))' }}>
                     {saveStatus === 'saved' ? '✓ Progress Saved' : '✗ Save Failed — check connection'}
                 </div>
             )}
 
             {/* Voice Narration Test Feature Toast */}
             {narrationToast && (
-                <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[9999] px-4 py-2 rounded-full font-bold text-xs tracking-wide shadow-2xl border backdrop-blur-md bg-slate-900/90 border-[#00f1fe]/40 text-[#00f1fe] animate-fade-in text-center max-w-[90vw]">
+                <div className="fixed left-1/2 -translate-x-1/2 z-[9999] px-4 py-2 rounded-full font-bold text-xs tracking-wide shadow-2xl border backdrop-blur-md bg-slate-900/90 border-[#00f1fe]/40 text-[#00f1fe] animate-fade-in text-center max-w-[90vw]"
+                    style={{ top: 'max(5rem, calc(env(safe-area-inset-top, 0px) + 1rem))' }}>
                     {narrationToast}
                 </div>
             )}

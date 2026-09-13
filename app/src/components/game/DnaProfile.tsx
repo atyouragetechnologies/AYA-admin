@@ -406,7 +406,7 @@ export function DnaProfile({ onBack }: DnaProfileProps) {
     }
 
     return (
-        <div className="fixed inset-0 z-[120] w-full h-full bg-[#0d0d16] font-sans text-[#f2effb] overflow-y-auto overflow-x-hidden pt-safe-top pb-24 selection:bg-[#99f7ff] selection:text-[#004145]">
+        <div className="fixed inset-0 z-[120] w-full h-full bg-[#0d0d16] font-sans text-[#f2effb] overflow-y-auto overflow-x-hidden pt-safe pb-[calc(env(safe-area-inset-bottom)+6rem)] selection:bg-[#99f7ff] selection:text-[#004145]">
             
             {/* Deep Space Background gradient */}
             <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top,#2b2b38_0%,#000000_60%)]" />

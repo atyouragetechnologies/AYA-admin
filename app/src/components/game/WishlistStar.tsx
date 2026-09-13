@@ -138,7 +138,8 @@ export function WishlistStar({ className = '', inline = false }: WishlistStarPro
                 /* Standalone Mode (Fixed position fallback) */
                 <motion.div
                     data-tutorial="wishlist"
-                    className={`fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 pointer-events-auto select-none ${className}`}
+                    className={`fixed left-6 md:left-8 z-40 pointer-events-auto select-none ${className}`}
+                    style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom, 0px))' }}
                     animate={{
                         y: [0, -10, 0],
                         rotate: [-1.5, 1.5, -1.5],

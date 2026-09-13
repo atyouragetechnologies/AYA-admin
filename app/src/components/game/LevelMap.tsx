@@ -724,7 +724,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
             </div>
 
             {/* Floating Life Check-in FAB Button */}
-            <div data-tutorial="checkin" className="fixed bottom-6 right-6 z-50 pointer-events-auto">
+            <div data-tutorial="checkin" className="fixed right-6 z-50 pointer-events-auto" style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom, 0px))' }}>
                 <button
                     onClick={() => {
                         audioSynth.playClick();

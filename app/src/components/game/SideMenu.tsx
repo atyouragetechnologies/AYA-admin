@@ -282,7 +282,7 @@ export function SideMenu({
                 )}
             >
                 {/* Header with Close Button */}
-                <div className="flex justify-between items-center px-6 pt-8 pb-4 shrink-0">
+                <div className="flex justify-between items-center px-6 pt-safe pb-4 shrink-0">
                     <span className={clsx(
                         "text-lg font-black uppercase tracking-widest",
                         isCandyMode ? "text-pink-500" : "text-[#00f2ff]"
@@ -299,7 +299,7 @@ export function SideMenu({
                 </div>
 
                 {/* Scrollable Content */}
-                <div className="flex-1 overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch] px-6 pb-8 flex flex-col gap-6">
+                <div className="flex-1 overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch] px-6 pb-safe flex flex-col gap-6">
                 {/* User Profile Identity Banner (Clickable) */}
                 {profile && (() => {
                     const levelInfo = calculateLevelInfo(profile.total_xp || 0);
@@ -547,7 +547,7 @@ export function SideMenu({
                 <button
                     onClick={toggleMenu}
                     className={clsx(
-                        "w-full flex items-center justify-center gap-2 p-4 mt-auto mb-8 rounded-2xl font-black uppercase tracking-widest text-sm transition-all shadow-lg active:scale-95",
+                        "w-full flex items-center justify-center gap-2 p-4 mt-auto mb-safe rounded-2xl font-black uppercase tracking-widest text-sm transition-all shadow-lg active:scale-95",
                         isCandyMode
                             ? "bg-pink-500 text-white hover:bg-pink-600 shadow-pink-500/30"
                             : "bg-gradient-to-r from-red-600 to-rose-700 text-white hover:brightness-110 shadow-red-900/50"

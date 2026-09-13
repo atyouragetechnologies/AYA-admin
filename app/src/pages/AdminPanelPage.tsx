@@ -207,7 +207,7 @@ export function AdminPanelPage() {
 
     if (isAdmin === null) {
         return (
-            <div className="min-h-screen bg-[#0a0510] flex items-center justify-center">
+            <div className="min-h-[100dvh] bg-[#0a0510] flex items-center justify-center">
                 <div className="text-indigo-400 text-lg animate-pulse font-bold flex items-center gap-3">
                     <Activity className="animate-spin" size={24} /> Authenticating Admin...
                 </div>
@@ -217,7 +217,7 @@ export function AdminPanelPage() {
 
     if (!isAdmin) {
         return (
-            <div className="min-h-screen bg-[#0a0510] flex items-center justify-center p-6">
+            <div className="min-h-[100dvh] bg-[#0a0510] flex items-center justify-center p-6">
                 <div className="bg-slate-900/80 p-8 rounded-3xl border border-rose-500/30 text-center max-w-md shadow-2xl">
                     <AlertTriangle className="mx-auto mb-4 text-rose-500" size={56} />
                     <h2 className="text-2xl font-black text-white mb-2">Access Restricted</h2>
@@ -315,7 +315,7 @@ export function AdminPanelPage() {
                             animate={{ x: 0 }}
                             exit={{ x: '-100%' }}
                             transition={{ type: 'spring', damping: 25, stiffness: 250 }}
-                            className="md:hidden fixed top-0 left-0 bottom-0 w-72 bg-slate-950 border-r border-slate-800/80 flex flex-col z-50 shadow-2xl p-5"
+                            className="md:hidden fixed top-0 left-0 bottom-0 w-72 bg-slate-950 border-r border-slate-800/80 flex flex-col z-50 shadow-2xl px-5 pt-safe pb-safe"
                         >
                             <div className="flex items-center justify-between pb-5 border-b border-slate-800/60">
                                 <h1 className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 flex items-center gap-2">

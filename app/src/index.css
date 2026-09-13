@@ -13,6 +13,31 @@
   --safe-area-right: env(safe-area-inset-right, 0px);
 }
 
+/* Custom Edge-to-Edge Safe Area Utilities */
+/* pb-safe / pt-safe: min 1.2rem padding even if device has no safe area (for buttons/footers) */
+@utility pb-safe {
+  padding-bottom: max(1.2rem, env(safe-area-inset-bottom, 0px));
+}
+@utility pt-safe {
+  padding-top: max(1.2rem, env(safe-area-inset-top, 0px));
+}
+@utility mb-safe {
+  margin-bottom: max(1.2rem, env(safe-area-inset-bottom, 0px));
+}
+@utility mt-safe {
+  margin-top: max(1.2rem, env(safe-area-inset-top, 0px));
+}
+@utility bottom-safe {
+  bottom: max(1.2rem, env(safe-area-inset-bottom, 0px));
+}
+/* pb-inset / pt-inset: EXACT safe area only — no minimum (for fullscreen wrappers) */
+@utility pb-inset {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@utility pt-inset {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
 /* Use this class instead of h-screen or min-h-screen on iOS */
 .full-height {
   height: 100vh;

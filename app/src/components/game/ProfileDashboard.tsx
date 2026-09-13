@@ -181,7 +181,7 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
 
     return (
         <div className={clsx(
-            "min-h-[100dvh] font-sans pb-24 overflow-x-hidden transition-colors duration-300",
+            "min-h-[100dvh] font-sans pb-[calc(env(safe-area-inset-bottom)+6rem)] overflow-x-hidden transition-colors duration-300",
             isCandyMode 
                 ? "bg-[#faf9f6] text-slate-800 selection:bg-emerald-200 selection:text-emerald-900" 
                 : "bg-slate-900 text-slate-200 selection:bg-[#00f2ff]/30 selection:text-[#00f2ff]"

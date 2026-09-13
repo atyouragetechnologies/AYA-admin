@@ -331,7 +331,7 @@ export function SolarMap({ onPlayLevel, onOpenDnaProfile, isMapActive = true }: 
             </div>
 
             {/* Settings & Theme Buttons */}
-            <div className="absolute top-20 left-4 md:top-24 md:left-6 z-[100] flex flex-col gap-2">
+            <div className="absolute left-4 md:left-6 z-[100] flex flex-col gap-2" style={{ top: 'max(5rem, calc(env(safe-area-inset-top, 0px) + 1rem))' }}>
                 <button
                     onClick={() => { audioSynth.playClick(); navigate('/game/settings'); }}
                     className="w-8 h-8 md:w-10 md:h-10 bg-white/5 hover:bg-white/10 active:bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-[#FFB347] transition-all border border-[#FFB347]/30 shadow-[0_0_10px_rgba(255,179,71,0.2)] hover:rotate-12 active:scale-90"
@@ -358,7 +358,7 @@ export function SolarMap({ onPlayLevel, onOpenDnaProfile, isMapActive = true }: 
             </div>
 
             {/* Journal Toggle & DNA Profile */}
-            <div className="absolute top-20 right-4 md:top-24 md:right-6 z-[100] flex flex-col gap-2 items-end map-right-buttons">
+            <div className="absolute right-4 md:right-6 z-[100] flex flex-col gap-2 items-end map-right-buttons" style={{ top: 'max(5rem, calc(env(safe-area-inset-top, 0px) + 1rem))' }}>
                 <button
                     onClick={() => { audioSynth.playClick(); }}
                     className="group flex items-center gap-1.5 md:gap-3 pr-3 md:pr-6 pl-1.5 py-1 md:py-2 rounded-full shadow-2xl transition-all border-2 bg-slate-900 border-[#FFB347]/50 hover:border-[#FFB347] hover:scale-105 active:scale-95 shadow-[0_0_15px_rgba(255,179,71,0.2)]"

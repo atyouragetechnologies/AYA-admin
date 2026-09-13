@@ -192,7 +192,7 @@ export function PersonalityIntro({ level, onStart, onBack }: PersonalityIntroPro
 
                     {/* Footer Actions */}
                     <div className={clsx(
-                        "pt-4 md:pt-6 mt-auto flex gap-4 sticky bottom-0 pb-2",
+                        "pt-4 md:pt-6 mt-auto flex gap-4 sticky bottom-0 pb-safe",
                         isCandyMode ? "bg-slate-50/90 backdrop-blur-sm" : "bg-[#0a0f28]/95 backdrop-blur-md border-t border-[#4DD9FF]/10 pt-4"
                     )}>
                         <button

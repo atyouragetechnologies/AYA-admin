@@ -345,7 +345,8 @@ export function ThemeSwitcherModal({ isOpen, onClose }: ThemeSwitcherModalProps)
           <AnimatePresence>
             {toast && (
               <motion.div
-                className="fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full text-sm font-black z-[600]"
+                className="fixed left-1/2 -translate-x-1/2 px-6 py-3 rounded-full text-sm font-black z-[600]"
+                style={{ bottom: 'max(2rem, env(safe-area-inset-bottom, 0px))' }}
                 initial={{ opacity: 0, y: 20, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -10, scale: 0.95 }}

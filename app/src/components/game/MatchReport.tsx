@@ -196,7 +196,7 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
     };
 
     return (
-        <div role="dialog" className={clsx("w-full min-h-screen flex flex-col font-sans bg-[#050817] text-white relative transition-opacity duration-300", isClosing && "opacity-0")}>
+        <div role="dialog" className={clsx("w-full min-h-[100dvh] flex flex-col font-sans bg-[#050817] text-white relative transition-opacity duration-300", isClosing && "opacity-0")}>
             {/* Background Effects */}
             <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
                 <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#8B5CF6]/15 blur-[120px]" />
