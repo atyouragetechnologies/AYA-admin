@@ -8,7 +8,45 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## AYA PROJECT — CRITICAL CONTEXT (Read First)
+
+> **Full reference:** [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) — read this before any task.
+
+This is the **AYA (At Your Age)** app. Key facts every agent must know:
+
+- **What it is:** React 18 + Vite + TypeScript PWA + Android (Capacitor 8) game app
+- **Styling:** Tailwind CSS **v4** — uses `@utility` syntax. Never use v3 `@layer utilities`
+- **State:** Single Zustand store at `app/src/store/userStore.ts`
+- **Database:** Supabase (`hstddacoqsmztmbvvhhr`) — never query directly from components
+- **Assets CDN:** `https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/`
+- **Package manager:** Bun
+
+### Story System (3-file rule)
+To add/edit a story, you MUST update ALL THREE files with the same `scenarioId`:
+1. `app/src/utils/levelGenerator.ts` — map card definition
+2. `app/src/data/scenarios.ts` — story frames/choices
+3. `app/src/data/storyMetadata.ts` — filter tags
+
+### Mobile Layout Rules
+- Use `min-h-[100dvh]` — NEVER `min-h-screen`
+- Fixed bottom: `style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}`
+- Fixed top: `style={{ top: 'max(1.5rem, env(safe-area-inset-top))' }}`
+- Tailwind utilities: `pb-safe`, `pt-safe`, `pb-inset`, `pt-inset` (defined in `index.css`)
+
+### Theme System
+- `mapTheme === 'city_dark'` → Dark (default)
+- `mapTheme === 'solar'` → Solar system
+- `mapTheme === 'light'` → Light/Candy mode
+- **`isCandyMode` is deprecated** — always use `mapTheme === 'light'`
+
+### File Encoding Warning
+Files with Hindi text (e.g., `HomeScreen.tsx`) will be corrupted by raw PowerShell `Set-Content`. Always use editor tools (`replace_file_content`, `multi_replace_file_content`).
+
+---
+
 ## Directory Exclusions (ALL Agents Must Respect)
+
 
 The following directories are **AI agent infrastructure**, not application source code.
 **Never** browse, index, search, read, or include files from these directories when answering questions or generating code — they contain thousands of irrelevant files that will pollute context:
