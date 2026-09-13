@@ -65,11 +65,6 @@ interface SessionChoiceData {
 }
 
 export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComplete }: ScenarioGameProps) {
-    // DEBUG: Confirms this component is the active one (check console on game load)
-    console.log('[AYA DEBUG] ScenarioGame mounted for level:', level?.id, level?.personality);
-    // BUILD MARKER: If this timestamp matches deployment time, the new code is live
-    console.log('[AYA BUILD_MARKER] deployed 2026-04-04T15:50 IST — if you see this, prod is serving the latest code');
-
     const [currentFrameId, setCurrentFrameId] = useState('intro');
     const [frameHistory, setFrameHistory] = useState<string[]>([]);
     
@@ -580,9 +575,6 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                 audioRef.current.pause();
                 audioRef.current.currentTime = 0;
             }
-            // DEBUG: Fires immediately on EVERY choice tap — confirms new code is running
-            console.log('[AYA DEBUG] handleChoiceClick fired! choice.text =', choice.text, '| choice.next =', choice.next);
-
             // Skip trait calculation for navigation-only choices
             const isNavChoice = NAVIGATION_CHOICES.some(nav => choice.text.toLowerCase() === nav);
 
@@ -631,9 +623,6 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                time_taken_seconds: timeTakenSeconds,
                trait_impacts: adjustedImpacts
             };
-
-            // DEBUG: Full payload for each choice
-            console.log('[AYA DEBUG] choiceData built:', JSON.stringify(choiceData, null, 2));
 
             if (choice.next !== 'intro' && choice.next !== 'COMPLETE') {
                  addChoiceToSession(choiceData);
@@ -794,9 +783,6 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                 matchResult: matchResult
             };
             collectLesson(lessonData);
-
-            // Supabase Tracking
-            console.log('[AYA DEBUG] COMPLETE branch reached. userProfile.id =', userProfile?.id);
 
             // Calculate XP progression mathematically
             const safeLevelScores = levelScores || {};
