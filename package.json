@@ -10,6 +10,8 @@
   "scripts": {
     "dev": "vite dev",
     "build:game": "npm run --prefix app build && node -e \"const fs = require('fs'); fs.rmSync('public/game', {recursive: true, force: true}); fs.cpSync('app/dist', 'public/game', {recursive: true, force: true}); console.log('[Build] Synced app/dist to public/game');\"",
+    "build:android": "npm run --prefix app build -- --base=/",
+    "sync:android": "npm run build:android && npx cap sync",
     "build": "npm run build:game && vite build",
     "build:dev": "vite build --mode development",
     "deploy:web": "npm run build && npx wrangler deploy --cwd .output/",
@@ -17,7 +19,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "ota:push": "node ota-predeploy.mjs && npm run build:game && node ota-push.mjs",
+    "ota:push": "node ota-predeploy.mjs && npm run build:android && node ota-push.mjs",
     "ota:push:only": "node ota-predeploy.mjs && node ota-push.mjs"
   },
   "dependencies": {

@@ -15,6 +15,7 @@ const APP_VERSION = rootPkg.version || '1.0.0';
 // https://vite.dev/config/
 export default defineConfig({
   base: '/game/',
+  envDir: '../',
   define: {
     // Expose app version from package.json at build time
     'import.meta.env.VITE_APP_VERSION': JSON.stringify(APP_VERSION),
