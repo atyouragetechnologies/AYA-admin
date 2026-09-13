@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import gameHtml from './public/game/index.html?raw';
 
 type ServerEntry = {
