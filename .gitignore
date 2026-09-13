@@ -61,3 +61,4 @@ dummy-web-dir/
 .env.production
 serviceAccountKey.json
 google-services-secret.json
+google-services.json
