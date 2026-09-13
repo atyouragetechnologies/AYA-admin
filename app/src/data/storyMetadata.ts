@@ -5187,6 +5187,65 @@ export const STORY_METADATA: StoryMetadata[] = [
         "source": "Interview Transcript"
       }
     ]
+  },
+  {
+    "storyId": "lvl_age_20_pratosh",
+    "situationTags": [
+      "starting_something",
+      "career_uncertainty",
+      "feeling_stuck",
+      "discipline",
+      "identity_question"
+    ],
+    "problemTags": [
+      "lack_of_real_world_awareness",
+      "navigating_newfound_freedom",
+      "false_security_of_academics",
+      "academic_comfort_trap"
+    ],
+    "emotionalTags": [
+      "confused",
+      "curious",
+      "seeking"
+    ],
+    "intentTags": [
+      "find_direction",
+      "challenge_myself",
+      "build_confidence"
+    ],
+    "lifeStageTags": [
+      "college",
+      "early_20s"
+    ],
+    "ageMin": 19,
+    "ageMax": 24,
+    "dominantTrait": "initiative",
+    "resolutionArchetype": "action_step",
+    "lessonTags": [
+      "initiative",
+      "awareness",
+      "real_world_skills",
+      "stepping_out",
+      "discipline"
+    ],
+    "difficulty": 2,
+    "relatability": 5,
+    "era": "modern",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Pratosh Bansal at age 20, an engineering student navigating newfound freedom and the trap of classroom comfort, learning that true awareness requires actively stepping out.",
+    "triggerPhrases": [
+      "pratosh bansal",
+      "classroom comfort",
+      "college freedom",
+      "syllabus trap",
+      "industry exposure",
+      "pratosh bansal age 20",
+      "engineering student"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Pratosh Bansal at age 20 faced the classroom illusion — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
   }
 ];
 
