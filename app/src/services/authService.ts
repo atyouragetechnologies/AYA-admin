@@ -45,7 +45,7 @@ export const authService = {
     async signInWithGoogle(redirectTo?: string) {
         const targetUrl = redirectTo || `${window.location.origin}/game/welcome`;
 
-        if (isNativeApp()) {
+        if (isNativeApp) {
             // Use native Google Sign In popup (bypasses broken webview redirects)
             const result = await FirebaseAuthentication.signInWithGoogle({
                 skipNativeAuth: true,
@@ -855,7 +855,7 @@ export const authService = {
     async signOut() {
         try {
             await supabase.auth.signOut();
-            if (isNativeApp()) {
+            if (isNativeApp) {
                 await FirebaseAuthentication.signOut().catch(() => {});
             }
         } catch (e) {

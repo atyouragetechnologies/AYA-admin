@@ -346,17 +346,17 @@ export function ThemeSwitcherModal({ isOpen, onClose }: ThemeSwitcherModalProps)
             {toast && (
               <motion.div
                 className="fixed left-1/2 -translate-x-1/2 px-6 py-3 rounded-full text-sm font-black z-[600]"
-                style={{ bottom: 'max(2rem, env(safe-area-inset-bottom, 0px))' }}
-                initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.95 }}
                 style={{
+                  bottom: 'max(2rem, env(safe-area-inset-bottom, 0px))',
                   fontFamily: "'Space Grotesk', sans-serif",
                   background: 'rgba(12,12,29,0.97)',
                   border: '1px solid rgba(0,241,254,0.3)',
                   color: '#ffffff',
                   boxShadow: '0 10px 40px rgba(0,0,0,0.6), 0 0 20px rgba(0,241,254,0.1)',
                 }}
+                initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
               >
                 {toast}
               </motion.div>
