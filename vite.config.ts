@@ -22,7 +22,8 @@ export default defineConfig({
           '**/public/**', 
           '**/.agents/**', 
           '**/android/**',
-          '**/app/dist/**'
+          '**/app/dist/**',
+          '**/.output/**'
         ]
       }
     },

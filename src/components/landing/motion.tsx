@@ -37,6 +37,19 @@ export function Reveal({
   useEffect(() => {
     const el = ref.current;
     if (!el || seen) return;
+
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      setSeen(true);
+      return;
+    }
+
+    // Immediately reveal if already visible in the viewport (e.g. Hero section above the fold)
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      setSeen(true);
+      return;
+    }
+
     const io = new IntersectionObserver(
       (entries) => {
         if (entries[0]?.isIntersecting) {
@@ -44,10 +57,17 @@ export function Reveal({
           io.disconnect();
         }
       },
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.15 },
+      { rootMargin: "0px 0px -5% 0px", threshold: 0.05 },
     );
     io.observe(el);
-    return () => io.disconnect();
+
+    // Failsafe: never leave content invisible if observer stalls
+    const timer = setTimeout(() => setSeen(true), 1200);
+
+    return () => {
+      io.disconnect();
+      clearTimeout(timer);
+    };
   }, [seen]);
 
   return (
