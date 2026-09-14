@@ -1,30 +1,19 @@
 import { executeVercelHandler } from "./vercel-polyfill";
 
-// Import all legacy Vercel Serverless Functions from app/api
-import checkAccess from "../app/api/check-access";
-import createCashfreeOrder from "../app/api/create-cashfree-order";
-import deleteAccount from "../app/api/delete-account";
-import generateAnalysis from "../app/api/generate-analysis";
-import pushSubscribe from "../app/api/push-subscribe";
-import recommendStories from "../app/api/recommend-stories";
-import recommendations from "../app/api/recommendations";
-import sendNotifications from "../app/api/send-notifications";
-import setUsername from "../app/api/set-username";
-import subscribePush from "../app/api/subscribe-push";
-import verifyCashfreeOrder from "../app/api/verify-cashfree-order";
-
-const handlers: Record<string, Function> = {
-  "/api/check-access": checkAccess,
-  "/api/create-cashfree-order": createCashfreeOrder,
-  "/api/delete-account": deleteAccount,
-  "/api/generate-analysis": generateAnalysis,
-  "/api/push-subscribe": pushSubscribe,
-  "/api/recommend-stories": recommendStories,
-  "/api/recommendations": recommendations,
-  "/api/send-notifications": sendNotifications,
-  "/api/set-username": setUsername,
-  "/api/subscribe-push": subscribePush,
-  "/api/verify-cashfree-order": verifyCashfreeOrder,
+// Dynamically import all legacy Vercel Serverless Functions to avoid
+// Node.js specific initialization errors (like web-push/asn1.js) on Edge environments
+const handlers: Record<string, () => Promise<any>> = {
+  "/api/check-access": () => import("../app/api/check-access"),
+  "/api/create-cashfree-order": () => import("../app/api/create-cashfree-order"),
+  "/api/delete-account": () => import("../app/api/delete-account"),
+  "/api/generate-analysis": () => import("../app/api/generate-analysis"),
+  "/api/push-subscribe": () => import("../app/api/push-subscribe"),
+  "/api/recommend-stories": () => import("../app/api/recommend-stories"),
+  "/api/recommendations": () => import("../app/api/recommendations"),
+  "/api/send-notifications": () => import("../app/api/send-notifications"),
+  "/api/set-username": () => import("../app/api/set-username"),
+  "/api/subscribe-push": () => import("../app/api/subscribe-push"),
+  "/api/verify-cashfree-order": () => import("../app/api/verify-cashfree-order"),
 };
 
 export async function handleApiRequest(request: Request, env: any): Promise<Response | null> {
@@ -32,8 +21,12 @@ export async function handleApiRequest(request: Request, env: any): Promise<Resp
   const pathname = url.pathname;
 
   // Find a matching handler
-  const handler = handlers[pathname];
-  if (handler) {
+  const getHandler = handlers[pathname];
+  if (getHandler) {
+    // Dynamically import the handler module
+    const module = await getHandler();
+    const handler = module.default || module;
+    
     // Execute using the Vercel Polyfill to convert standard Web Request/Response to Vercel syntax
     return await executeVercelHandler(handler, request, env);
   }
