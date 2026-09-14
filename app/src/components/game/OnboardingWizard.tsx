@@ -925,7 +925,7 @@ export function OnboardingWizard() {
 
                         <DotLottieReact
                             key={isHoveringBtn ? 'happy' : 'waving'}
-                            src={encodeURI(isHoveringBtn ? import.meta.env.BASE_URL + 'assets/Macot/happy mascot.lottie' : import.meta.env.BASE_URL + 'assets/Macot/waving mascot.lottie')}
+                            src={encodeURI(isHoveringBtn ? 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/happy mascot.lottie' : 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/waving mascot.lottie')}
                             loop
                             autoplay
                             style={{ width: '100%', height: '100%' }}

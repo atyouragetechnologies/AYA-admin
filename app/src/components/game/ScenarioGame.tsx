@@ -225,15 +225,15 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
 
         // Preload mascot preview image
         const img = new Image();
-        img.src = import.meta.env.BASE_URL + 'assets/mascot_frames/frame_1.webp';
+        img.src = 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/mascot_frames/frame_1.webp';
 
         // Preload mascot lottie animations into browser HTTP cache
         const lottieFiles = [
-            import.meta.env.BASE_URL + 'assets/Macot/watching left mascot.lottie',
-            import.meta.env.BASE_URL + 'assets/Macot/mascot with bird.lottie',
-            import.meta.env.BASE_URL + 'assets/Macot/happy mascot.lottie',
-            import.meta.env.BASE_URL + 'assets/Macot/Winner mascot.lottie',
-            import.meta.env.BASE_URL + 'assets/Macot/waving mascot.lottie',
+            'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/watching left mascot.lottie',
+            'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/mascot with bird.lottie',
+            'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/happy mascot.lottie',
+            'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/Winner mascot.lottie',
+            'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/waving mascot.lottie',
         ];
         lottieFiles.forEach(url => {
             fetch(encodeURI(url)).catch(() => {});

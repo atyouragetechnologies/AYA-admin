@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 export const AUTH_MASCOT_ASSETS = {
-    WAVING: import.meta.env.BASE_URL + 'assets/Macot/waving mascot.lottie',
-    HAPPY: import.meta.env.BASE_URL + 'assets/Macot/happy mascot.lottie',
-    WATCHING: import.meta.env.BASE_URL + 'assets/Macot/watching left mascot.lottie',
+    WAVING: 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/waving mascot.lottie',
+    HAPPY: 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/happy mascot.lottie',
+    WATCHING: 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/watching left mascot.lottie',
 } as const;
 
 interface AuthMascotProps {

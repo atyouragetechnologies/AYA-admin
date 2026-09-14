@@ -235,7 +235,7 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
                                     <img src={profile.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
                                 ) : (
                                     <DotLottieReact
-                                        src={import.meta.env.BASE_URL + "assets/Macot/waving mascot.lottie"}
+                                        src={'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/waving mascot.lottie'}
                                         loop
                                         autoplay
                                         style={{ width: '150%', height: '150%', marginTop: '10%' }}

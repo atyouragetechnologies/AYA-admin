@@ -3,10 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 export const MASCOT_ASSETS = {
-    WATCHING_LEFT: import.meta.env.BASE_URL + 'assets/Macot/watching left mascot.lottie',
-    BIRD: import.meta.env.BASE_URL + 'assets/Macot/mascot with bird.lottie',
-    HAPPY: import.meta.env.BASE_URL + 'assets/Macot/happy mascot.lottie',
-    WINNER: import.meta.env.BASE_URL + 'assets/Macot/Winner mascot.lottie',
+    WATCHING_LEFT: 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/watching left mascot.lottie',
+    BIRD: 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/mascot with bird.lottie',
+    HAPPY: 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/happy mascot.lottie',
+    WINNER: 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/Winner mascot.lottie',
 } as const;
 
 export type MascotAction = 'none' | 'select' | 'deselect' | 'next' | 'complete';

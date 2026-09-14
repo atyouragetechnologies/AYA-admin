@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Brain, Compass, Zap } from 'lucide-react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
-const LOADING_MASCOT_SRC = import.meta.env.BASE_URL + 'assets/Macot/watching left mascot.lottie';
+const LOADING_MASCOT_SRC = 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/watching left mascot.lottie';
 
 interface InsightLoadingScreenProps {
     character: string;

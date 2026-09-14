@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 export const ANALYSIS_MASCOT_ASSETS = {
-    BIRD: import.meta.env.BASE_URL + 'assets/Macot/mascot with bird.lottie',
-    HAPPY: import.meta.env.BASE_URL + 'assets/Macot/happy mascot.lottie',
-    WINNER: import.meta.env.BASE_URL + 'assets/Macot/Winner mascot.lottie',
-    WAVING: import.meta.env.BASE_URL + 'assets/Macot/waving mascot.lottie',
+    BIRD: 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/mascot with bird.lottie',
+    HAPPY: 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/happy mascot.lottie',
+    WINNER: 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/Winner mascot.lottie',
+    WAVING: 'https://aya-assets-proxy.atyouragetechnologies.workers.dev/assets/Macot/waving mascot.lottie',
 } as const;
 
 interface AnalysisMascotModalProps {

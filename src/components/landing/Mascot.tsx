@@ -60,7 +60,7 @@ export function Mascot({
       <div className={cn(float && !reduced && "animate-float")}>
         <div className={cn("relative", !reduced && "animate-breathe")}>
           <img
-            src={mascot}
+            src={src}
             alt={alt}
             draggable={false}
             loading={priority ? "eager" : "lazy"}
